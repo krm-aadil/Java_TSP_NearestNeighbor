@@ -5,40 +5,52 @@ public class TSPNearestDelivery {
         Scanner scanner = new Scanner(System.in);
         int numLocations;
 
+        // Prompt user for the number of delivery points
         System.out.print("Enter the number of delivery points (excluding starting point): ");
         numLocations = scanner.nextInt() + 1; // Add 1 to account for the starting point
 
+        //  arrays and maps to store input data
         String[] deliveryPoints = new String[numLocations];
         HashMap<Integer, String> itemIdsAndNames = new HashMap<>();
         HashMap<Integer, String> customerNames = new HashMap<>(); // Separate map for customer names
         HashMap<Integer, String> deliveryAddresses = new HashMap<>();
 
-        // Initialize the distance matrix
+        //  the distance matrix
         int[][] distanceMatrix = new int[numLocations][numLocations];
         for (int i = 0; i < numLocations; i++) {
             for (int j = 0; j < numLocations; j++) {
                 if (i == j) {
                     distanceMatrix[i][j] = 0; // Distance to itself is 0
                 } else {
+                    // Prompt user for distance between points
                     System.out.print("Enter distance from point " + i + " to point " + j + ": ");
                     distanceMatrix[i][j] = scanner.nextInt();
                 }
             }
         }
 
-        // Initialize delivery points, item IDs, customer IDs, addresses, and names
+        //  delivery points, item IDs, customer IDs, addresses, and names
         for (int i = 1; i < numLocations; i++) { // Start from i=1 to skip point 0
+            // Prompt user for delivery point name
             System.out.print("Enter name for delivery point " + i + ": ");
             deliveryPoints[i] = scanner.next();
+
+            // Prompt user for item ID and store in itemIdsAndNames map
             System.out.print("Enter item ID for delivery point " + i + ": ");
             int itemId = scanner.nextInt();
             itemIdsAndNames.put(itemId, deliveryPoints[i]);
+
+            // Prompt user for customer ID
             System.out.print("Enter customer ID for delivery point " + i + ": ");
             int customerId = scanner.nextInt();
+
+            // Prompt user for customer name and store separately in customerNames map
             System.out.print("Enter customer name for delivery point " + i + ": ");
             String customerName = scanner.next();
             customerNames.put(customerId, customerName); // Store customer name separately
-            System.out.print("Enter address for delivery point " + i + ": "); // Prompt for address
+
+            // Prompt user for delivery address and store in deliveryAddresses map
+            System.out.print("Enter address for delivery point " + i + ": ");
             String address = scanner.next();
             deliveryAddresses.put(customerId, address); // Store address in deliveryAddresses
         }
@@ -55,6 +67,7 @@ public class TSPNearestDelivery {
             if (location == 0) {
                 System.out.println("Starting Location");
             } else {
+                // Get customer ID from itemIdsAndNames map and fetch customer details
                 Integer customerId = getKeyByValue(itemIdsAndNames, deliveryPoints[location]);
                 String customerName = customerNames.get(customerId);
                 String address = deliveryAddresses.get(customerId);
@@ -76,6 +89,7 @@ public class TSPNearestDelivery {
         tspRouteResult.serializeToFile(filename);
     }
 
+    // Method to compute the nearest Delivery TSP route
     public static List<Integer> nearestDeliveryTSP(int[][] distanceMatrix, int startLocation)
     {
         int numLocations = distanceMatrix.length;
@@ -89,6 +103,7 @@ public class TSPNearestDelivery {
 
         for (int i = 1; i < numLocations; i++)
         {
+            // Find the nearest delivery point
             int nearestDelivery = findNearestDelivery(currentLocation, distanceMatrix, visited);
             tour.add(nearestDelivery);
             visited[nearestDelivery] = true;
@@ -101,6 +116,7 @@ public class TSPNearestDelivery {
         return tour;
     }
 
+    // Method to find the nearest delivery point
     public static int findNearestDelivery(int currentLocation, int[][] distanceMatrix, boolean[] visited)
     {
         int nearestDelivery = -1;
@@ -117,6 +133,7 @@ public class TSPNearestDelivery {
         return nearestDelivery;
     }
 
+    // Method to find a key in a map by its associated value
     public static <K, V> K getKeyByValue(Map<K, V> map, V value)
     {
         for (Map.Entry<K, V> entry : map.entrySet()) {

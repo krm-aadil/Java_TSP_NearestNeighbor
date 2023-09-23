@@ -15,7 +15,7 @@ public class TSPRouteResult implements Serializable {
         this.deliveryAddresses = deliveryAddresses;
     }
 
-    // Getter methods for the fields
+
 
     public void serializeToFile(String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
@@ -28,4 +28,5 @@ public class TSPRouteResult implements Serializable {
             e.printStackTrace();
         }
     }
+
 }
