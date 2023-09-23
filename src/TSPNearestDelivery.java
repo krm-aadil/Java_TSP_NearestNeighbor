@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TSPNearestNeighbor {
+public class TSPNearestDelivery {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int numLocations;
@@ -46,8 +46,8 @@ public class TSPNearestNeighbor {
         // Specify the starting location (delivery van's location)
         int startLocation = 0; // Change this index to specify the starting location
 
-        // Find the nearest neighbor TSP route
-        List<Integer> tour = nearestNeighborTSP(distanceMatrix, startLocation);
+        // Find the nearest Delivery TSP route
+        List<Integer> tour = nearestDeliveryTSP(distanceMatrix, startLocation);
 
         // Output the TSP route with details
         System.out.println("\nTSP Route:");
@@ -65,9 +65,18 @@ public class TSPNearestNeighbor {
                 System.out.println();
             }
         }
+
+        // Create a TSPRouteResult object to hold the route and related data
+        TSPRouteResult tspRouteResult = new TSPRouteResult(tour, itemIdsAndNames, customerNames, deliveryAddresses);
+
+        // Specify the filename for serialization
+        String filename = "tsp_route_result.ser";
+
+        // Serialize and write the TSP route result to a file
+        tspRouteResult.serializeToFile(filename);
     }
 
-    public static List<Integer> nearestNeighborTSP(int[][] distanceMatrix, int startLocation)
+    public static List<Integer> nearestDeliveryTSP(int[][] distanceMatrix, int startLocation)
     {
         int numLocations = distanceMatrix.length;
         boolean[] visited = new boolean[numLocations];
@@ -80,10 +89,10 @@ public class TSPNearestNeighbor {
 
         for (int i = 1; i < numLocations; i++)
         {
-            int nearestNeighbor = findNearestNeighbor(currentLocation, distanceMatrix, visited);
-            tour.add(nearestNeighbor);
-            visited[nearestNeighbor] = true;
-            currentLocation = nearestNeighbor;
+            int nearestDelivery = findNearestDelivery(currentLocation, distanceMatrix, visited);
+            tour.add(nearestDelivery);
+            visited[nearestDelivery] = true;
+            currentLocation = nearestDelivery;
         }
 
         // Return to the starting location to complete the cycle
@@ -92,20 +101,20 @@ public class TSPNearestNeighbor {
         return tour;
     }
 
-    public static int findNearestNeighbor(int currentLocation, int[][] distanceMatrix, boolean[] visited)
+    public static int findNearestDelivery(int currentLocation, int[][] distanceMatrix, boolean[] visited)
     {
-        int nearestNeighbor = -1;
+        int nearestDelivery = -1;
         int minDistance = Integer.MAX_VALUE;
         int numLocations = distanceMatrix.length;
 
         for (int i = 0; i < numLocations; i++) {
             if (!visited[i] && distanceMatrix[currentLocation][i] < minDistance) {
-                nearestNeighbor = i;
+                nearestDelivery = i;
                 minDistance = distanceMatrix[currentLocation][i];
             }
         }
 
-        return nearestNeighbor;
+        return nearestDelivery;
     }
 
     public static <K, V> K getKeyByValue(Map<K, V> map, V value)
