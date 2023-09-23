@@ -11,12 +11,14 @@ public class TSPNearestDelivery {
 
         //  arrays and maps to store input data
         String[] deliveryPoints = new String[numLocations];
-        HashMap<Integer, String> itemIdsAndNames = new HashMap<>();
-        HashMap<Integer, String> customerNames = new HashMap<>(); // Separate map for customer names
-        HashMap<Integer, String> deliveryAddresses = new HashMap<>();
+        HashMap<Integer, String> itemIdsAndNames = new HashMap<>(); // Item IDs and names
+        HashMap<Integer, String> customerNames = new HashMap<>(); // Customer names
+        HashMap<Integer, String> deliveryAddresses = new HashMap<>(); // Delivery addresses
 
         //  the distance matrix
         int[][] distanceMatrix = new int[numLocations][numLocations];
+
+// Prompt user for distance between points
         for (int i = 0; i < numLocations; i++) {
             for (int j = 0; j < numLocations; j++) {
                 if (i == j) {
@@ -119,10 +121,12 @@ public class TSPNearestDelivery {
     // Method to find the nearest delivery point
     public static int findNearestDelivery(int currentLocation, int[][] distanceMatrix, boolean[] visited)
     {
+        // Initialize the nearest delivery point and the minimum distance
         int nearestDelivery = -1;
         int minDistance = Integer.MAX_VALUE;
         int numLocations = distanceMatrix.length;
 
+        // Find the nearest delivery point
         for (int i = 0; i < numLocations; i++) {
             if (!visited[i] && distanceMatrix[currentLocation][i] < minDistance) {
                 nearestDelivery = i;
@@ -136,6 +140,7 @@ public class TSPNearestDelivery {
     // Method to find a key in a map by its associated value
     public static <K, V> K getKeyByValue(Map<K, V> map, V value)
     {
+        // Iterate through the map to find the key with the specified value
         for (Map.Entry<K, V> entry : map.entrySet()) {
             if (entry.getValue().equals(value)) {
                 return entry.getKey();
