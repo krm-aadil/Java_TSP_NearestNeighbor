@@ -69,7 +69,9 @@ public class TSPNearestDelivery {
         System.out.println("\nTSP Route:");
         for (Integer location : tour) {
             if (location == 0) {
-                System.out.println("Starting Location");
+                System.out.println("<<Starting Location>>");
+                System.out.println("_________________");
+                System.out.println("                 ");
             } else {
                 // Get customer ID from itemIdsAndNames map and fetch customer details
                 Integer customerId = getKeyByValue(itemIdsAndNames, deliveryPoints[location]);

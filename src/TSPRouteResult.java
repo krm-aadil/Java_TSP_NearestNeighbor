@@ -27,7 +27,7 @@ public class TSPRouteResult implements Serializable {
 
 //          write the object to the file
             objectOut.writeObject(this);
-            System.out.println("TSP route result has been serialized to " + filename);
+            System.out.println("TSP route result has been serialized and exported to " + filename);
 
         } catch (IOException e) {
             e.printStackTrace();
