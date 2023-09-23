@@ -6,7 +6,9 @@ public class TSPNearestDelivery {
         int numLocations;
 
         // Prompt user for the number of delivery points
-        System.out.print("Enter the number of delivery points (excluding starting point): ");
+        System.out.println("                                                         ");
+        System.out.println("*** VAN DELIVERY SCHEDULE OPTIMIZER - CB010188 ***         ");
+        System.out.print(">Please enter how many No of delivery points : ");
         numLocations = scanner.nextInt() + 1; // Add 1 to account for the starting point
 
         //  arrays and maps to store input data
@@ -25,7 +27,7 @@ public class TSPNearestDelivery {
                     distanceMatrix[i][j] = 0; // Distance to itself is 0
                 } else {
                     // Prompt user for distance between points
-                    System.out.print("Enter distance from point " + i + " to point " + j + ": ");
+                    System.out.print(">>please enter how many Kms from point " + i + " to point " + j + " are there: ");
                     distanceMatrix[i][j] = scanner.nextInt();
                 }
             }
@@ -34,25 +36,25 @@ public class TSPNearestDelivery {
         //  delivery points, item IDs, customer IDs, addresses, and names
         for (int i = 1; i < numLocations; i++) { // Start from i=1 to skip point 0
             // Prompt user for delivery point name
-            System.out.print("Enter name for delivery point " + i + ": ");
+            System.out.print(">>>please Enter name for delivery point " + i + ": ");
             deliveryPoints[i] = scanner.next();
 
             // Prompt user for item ID and store in itemIdsAndNames map
-            System.out.print("Enter item ID for delivery point " + i + ": ");
+            System.out.print(">>>>>please enter item ID for delivery point " + i + ": ");
             int itemId = scanner.nextInt();
             itemIdsAndNames.put(itemId, deliveryPoints[i]);
 
             // Prompt user for customer ID
-            System.out.print("Enter customer ID for delivery point " + i + ": ");
+            System.out.print(">>>>>>Enter customer ID for delivery point " + i + ": ");
             int customerId = scanner.nextInt();
 
             // Prompt user for customer name and store separately in customerNames map
-            System.out.print("Enter customer name for delivery point " + i + ": ");
+            System.out.print(">>>>>>>Enter customer name for delivery point " + i + ": ");
             String customerName = scanner.next();
             customerNames.put(customerId, customerName); // Store customer name separately
 
             // Prompt user for delivery address and store in deliveryAddresses map
-            System.out.print("Enter address for delivery point " + i + ": ");
+            System.out.print(">>>>>>>Enter address for delivery point " + i + ": ");
             String address = scanner.next();
             deliveryAddresses.put(customerId, address); // Store address in deliveryAddresses
         }
@@ -73,10 +75,12 @@ public class TSPNearestDelivery {
                 Integer customerId = getKeyByValue(itemIdsAndNames, deliveryPoints[location]);
                 String customerName = customerNames.get(customerId);
                 String address = deliveryAddresses.get(customerId);
+                System.out.println("_____DELIVERY INVOICE_______");
                 System.out.println("Location: " + deliveryPoints[location]);
                 System.out.println("Customer ID: " + customerId);
                 System.out.println("Customer Name: " + customerName);
-                System.out.println("Address: " + address); // Display the address
+                System.out.println("Address: " + address);
+                System.out.println("____________END____________");
                 System.out.println();
             }
         }
